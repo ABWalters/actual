@@ -344,6 +344,17 @@ const TransactionHeader = memo(
           />
         )}
         <HeaderCell
+          value="Tags"
+          width="flex"
+          alignItems="flex"
+          marginLeft={-5}
+          id="tags"
+          icon={field === 'tags' ? ascDesc : 'clickable'}
+          onClick={() =>
+            onSort('tags', selectAscDesc(field, ascDesc, 'tags', 'asc'))
+          }
+        />
+        <HeaderCell
           value="Payment"
           width={90}
           alignItems="flex-end"
@@ -683,6 +694,43 @@ function PayeeIcons({
     </>
   );
 }
+
+const TagsCell = () => {
+  const tags = ['india-2024', 'spain-2014', 'italy-2018'];
+  return (
+    <Cell
+      width="flex"
+      style={{
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        flexDirection: 'row',
+        overflowX: 'hidden',
+      }}
+      exposed={true}
+    >
+      {() => (
+        <>
+          {tags.map(tag => (
+            <View
+              key={tag}
+              style={{
+                color: theme.upcomingText,
+                backgroundColor: theme.upcomingBackground,
+                margin: '0 5px',
+                padding: '3px 7px',
+                borderRadius: 4,
+                whiteSpace: 'nowrap',
+                flex: '0 0 auto',
+              }}
+            >
+              #{tag}
+            </View>
+          ))}
+        </>
+      )}
+    </Cell>
+  );
+};
 
 const Transaction = memo(function Transaction(props) {
   const {
@@ -1248,6 +1296,8 @@ const Transaction = memo(function Transaction(props) {
           )}
         </CustomCell>
       )}
+
+      <TagsCell />
 
       <InputCell
         /* Debit field for all transactions */
