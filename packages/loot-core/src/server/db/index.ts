@@ -29,6 +29,7 @@ import {
 import { sendMessages, batchMessages } from '../sync';
 
 import { shoveSortOrders, SORT_INCREMENT } from './sort';
+import { TagEntity } from '../../types/models/tag';
 
 export { toDateRepr, fromDateRepr } from '../models';
 
@@ -276,6 +277,12 @@ export async function getCategories(): Promise<CategoryEntity[]> {
   return await all(`
     SELECT c.* FROM categories c WHERE c.tombstone = 0
       ORDER BY c.sort_order, c.id
+  `);
+}
+
+export async function getTags(): Promise<TagEntity[]> {
+  return await all(`
+    SELECT * FROM tags;
   `);
 }
 
