@@ -15,6 +15,7 @@ const initialState: QueriesState = {
     grouped: [],
     list: [],
   },
+  tags: null,
   payees: [],
   earliestTransaction: null,
 };
@@ -75,6 +76,11 @@ export default function update(
       return {
         ...state,
         categories: action.categories,
+      };
+    case constants.LOAD_TAGS:
+      return {
+        ...state,
+        tags: action.tags,
       };
     case constants.LOAD_PAYEES:
       return {

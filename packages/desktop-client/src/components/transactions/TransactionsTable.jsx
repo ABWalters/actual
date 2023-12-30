@@ -21,6 +21,7 @@ import {
   isValid as isDateValid,
 } from 'date-fns';
 
+import { createTag } from 'loot-core/src/client/actions';
 import { useCachedSchedules } from 'loot-core/src/client/data-hooks/schedules';
 import {
   getAccountsById,
@@ -76,6 +77,8 @@ import {
   UnexposedCellContent,
 } from '../table';
 import { Tooltip } from '../tooltips';
+
+import PropTypes from 'prop-types';
 
 function getDisplayValue(obj, name) {
   return obj ? obj[name] : '';
@@ -695,8 +698,15 @@ function PayeeIcons({
   );
 }
 
-const TagsCell = () => {
-  const tags = ['india-2024', 'spain-2014', 'italy-2018'];
+const TagsCell = ({ tags }) => {
+  // const tags = ['india-2024', 'spain-2014', 'italy-2018'];
+
+  const dispatch = useDispatch();
+
+  const onClick = () => {
+    dispatch(createTag('testtag'));
+  };
+
   return (
     <Cell
       width="flex"
@@ -710,9 +720,10 @@ const TagsCell = () => {
     >
       {() => (
         <>
-          {tags.map(tag => (
+          {tags.map(({ id, name }) => (
             <View
-              key={tag}
+              key={id}
+              onClick={onClick}
               style={{
                 color: theme.upcomingText,
                 backgroundColor: theme.upcomingBackground,
@@ -723,7 +734,7 @@ const TagsCell = () => {
                 flex: '0 0 auto',
               }}
             >
-              #{tag}
+              #{name}
             </View>
           ))}
         </>
@@ -731,6 +742,10 @@ const TagsCell = () => {
     </Cell>
   );
 };
+
+// TagsCell.propTypes = {
+//   tags: PropTypes.arrayOf().isRequired,
+// };
 
 const Transaction = memo(function Transaction(props) {
   const {
@@ -749,6 +764,7 @@ const Transaction = memo(function Transaction(props) {
     inheritedFields,
     focusedField,
     categoryGroups,
+    tags,
     payees,
     accounts,
     balance,
@@ -1297,7 +1313,7 @@ const Transaction = memo(function Transaction(props) {
         </CustomCell>
       )}
 
-      <TagsCell />
+      <TagsCell tags={tags} />
 
       <InputCell
         /* Debit field for all transactions */
@@ -1619,6 +1635,7 @@ function TransactionTableInner({
       selectedItems,
       accounts,
       categoryGroups,
+      tags,
       payees,
       showCleared,
       showAccount,
@@ -1681,6 +1698,7 @@ function TransactionTableInner({
           focusedField={editing && tableNavigator.focusedField}
           accounts={accounts}
           categoryGroups={categoryGroups}
+          tags={tags}
           payees={payees}
           inheritedFields={
             parent?.payee === trans.payee ? new Set(['payee']) : new Set()

@@ -153,6 +153,10 @@ handlers['get-categories'] = async function () {
   };
 };
 
+handlers['get-tags'] = async function () {
+  return db.getTags();
+};
+
 handlers['get-earliest-transaction'] = async function () {
   const { data } = await aqlQuery(
     q('transactions')
@@ -273,6 +277,14 @@ handlers['budget-set-type'] = async function ({ type }) {
   // Save prefs
   return prefs.savePrefs({ budgetType: type });
 };
+
+handlers['tag-create'] = mutator(async function ({ name }) {
+  return withUndo(async () => {
+    return db.insertTag({
+      name,
+    });
+  });
+});
 
 handlers['category-create'] = mutator(async function ({
   name,

@@ -1,0 +1,8 @@
+BEGIN TRANSACTION;
+
+CREATE TABLE tags
+  (id TEXT PRIMARY KEY,
+   name TEXT
+   tombstone INTEGER DEFAULT 0);
+
+COMMIT;

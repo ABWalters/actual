@@ -25,6 +25,7 @@ import {
   categoryModel,
   categoryGroupModel,
   payeeModel,
+  tagModel,
 } from '../models';
 import { sendMessages, batchMessages } from '../sync';
 
@@ -343,6 +344,11 @@ export async function deleteCategoryGroup(group, transferId?: string) {
   // Delete all the categories within a group
   await Promise.all(categories.map(cat => deleteCategory(cat, transferId)));
   await delete_('category_groups', group.id);
+}
+
+export async function insertTag(tag) {
+  tag = tagModel.validate(tag);
+  return await insertWithUUID('tags', tag);
 }
 
 export async function insertCategory(

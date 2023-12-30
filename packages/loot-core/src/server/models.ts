@@ -62,6 +62,13 @@ export const categoryModel = {
   },
 };
 
+export const tagModel = {
+  validate(tag, { update }: { update?: boolean } = {}) {
+    requiredFields('tag', tag, ['name'], update);
+    return tag;
+  },
+};
+
 export const categoryGroupModel = {
   validate(categoryGroup, { update }: { update?: boolean } = {}) {
     requiredFields(

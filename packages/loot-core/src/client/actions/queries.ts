@@ -141,6 +141,16 @@ export function getTags() {
   };
 }
 
+export function createTag(name: string) {
+  return async (dispatch: Dispatch) => {
+    const id = await send('tag-create', {
+      name,
+    });
+    dispatch(getTags());
+    return id;
+  };
+}
+
 export function createCategory(
   name: string,
   groupId: string,

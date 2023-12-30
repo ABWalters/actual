@@ -56,6 +56,7 @@ export interface ServerHandlers {
   }>;
 
   'get-tags': () => Promise<Array<TagEntity>>;
+  'tag-create': (arg: { name }) => Promise<unknown>;
 
   'get-earliest-transaction': () => Promise<{ date: string }>;
 
