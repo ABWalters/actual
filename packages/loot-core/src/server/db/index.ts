@@ -25,10 +25,12 @@ import {
   categoryModel,
   categoryGroupModel,
   payeeModel,
+  tagModel,
 } from '../models';
 import { sendMessages, batchMessages } from '../sync';
 
 import { shoveSortOrders, SORT_INCREMENT } from './sort';
+import { TagEntity } from '../../types/models/tag';
 
 export { toDateRepr, fromDateRepr } from '../models';
 
@@ -279,6 +281,12 @@ export async function getCategories(): Promise<CategoryEntity[]> {
   `);
 }
 
+export async function getTags(): Promise<TagEntity[]> {
+  return await all(`
+    SELECT * FROM tags;
+  `);
+}
+
 export async function getCategoriesGrouped(): Promise<
   Array<CategoryGroupEntity>
 > {
@@ -336,6 +344,11 @@ export async function deleteCategoryGroup(group, transferId?: string) {
   // Delete all the categories within a group
   await Promise.all(categories.map(cat => deleteCategory(cat, transferId)));
   await delete_('category_groups', group.id);
+}
+
+export async function insertTag(tag) {
+  tag = tagModel.validate(tag);
+  return await insertWithUUID('tags', tag);
 }
 
 export async function insertCategory(

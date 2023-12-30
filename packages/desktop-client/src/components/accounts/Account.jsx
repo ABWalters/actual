@@ -39,6 +39,7 @@ import {
 } from '../transactions/TransactionsTable';
 
 import { AccountHeader } from './Header';
+import useTags from '../../hooks/useTags';
 
 function EmptyMessage({ onAdd }) {
   return (
@@ -1268,6 +1269,7 @@ class AccountInternal extends PureComponent {
     const {
       accounts,
       categoryGroups,
+      tags,
       payees,
       dateFormat,
       hideFraction,
@@ -1398,6 +1400,7 @@ class AccountInternal extends PureComponent {
                   }
                   accounts={accounts}
                   category={category}
+                  tags={tags}
                   categoryGroups={categoryGroups}
                   payees={payees}
                   balances={allBalances}
@@ -1478,6 +1481,7 @@ export default function Account() {
   const location = useLocation();
 
   const { grouped: categoryGroups } = useCategories();
+  const tags = useTags();
   const state = useSelector(state => ({
     newTransactions: state.queries.newTransactions,
     matchedTransactions: state.queries.matchedTransactions,
@@ -1536,6 +1540,7 @@ export default function Account() {
         <AccountHack
           {...state}
           categoryGroups={categoryGroups}
+          tags={tags}
           {...actionCreators}
           modalShowing={state.modalShowing}
           accountId={params.id}

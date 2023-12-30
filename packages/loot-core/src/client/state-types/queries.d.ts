@@ -8,6 +8,7 @@ export type QueriesState = {
   updatedAccounts: string[];
   accounts: AccountEntity[];
   categories: Awaited<ReturnType<Handlers['get-categories']>>;
+  tags: Awaited<ReturnType<Handlers['tags-get']>>;
   payees: Awaited<ReturnType<Handlers['payees-get']>>;
   earliestTransaction: unknown | null;
 };
@@ -49,6 +50,11 @@ type LoadCategoriesAction = {
   categories: State['categories'];
 };
 
+type LoadTagsAction = {
+  type: typeof constants.LOAD_TAGS;
+  tags: State['tags'];
+};
+
 type LoadPayeesAction = {
   type: typeof constants.LOAD_PAYEES;
   payees: State['payees'];
@@ -62,4 +68,5 @@ export type QueriesActions =
   | LoadAccountsAction
   | UpdateAccountAction
   | LoadCategoriesAction
+  | LoadTagsAction
   | LoadPayeesAction;

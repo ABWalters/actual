@@ -63,6 +63,7 @@ export default function TransactionList({
   accounts,
   category,
   categoryGroups,
+  tags,
   payees,
   balances,
   showBalances,
@@ -172,6 +173,7 @@ export default function TransactionList({
       loadMoreTransactions={loadMoreTransactions}
       accounts={accounts}
       categoryGroups={categoryGroups}
+      tags={tags}
       payees={payees}
       showBalances={showBalances}
       balances={balances}

@@ -13,6 +13,7 @@ import {
   GoCardlessToken,
   GoCardlessInstitution,
 } from './models';
+import { TagEntity } from './models/tag';
 import { EmptyObject } from './util';
 
 export interface ServerHandlers {
@@ -53,6 +54,9 @@ export interface ServerHandlers {
     grouped: Array<CategoryGroupEntity>;
     list: Array<CategoryEntity>;
   }>;
+
+  'get-tags': () => Promise<Array<TagEntity>>;
+  'tag-create': (arg: { name }) => Promise<unknown>;
 
   'get-earliest-transaction': () => Promise<{ date: string }>;
 

@@ -130,6 +130,27 @@ export function getCategories() {
   };
 }
 
+export function getTags() {
+  return async (dispatch: Dispatch) => {
+    const tags = await send('get-tags');
+    dispatch({
+      type: constants.LOAD_TAGS,
+      tags,
+    });
+    return tags;
+  };
+}
+
+export function createTag(name: string) {
+  return async (dispatch: Dispatch) => {
+    const id = await send('tag-create', {
+      name,
+    });
+    dispatch(getTags());
+    return id;
+  };
+}
+
 export function createCategory(
   name: string,
   groupId: string,
